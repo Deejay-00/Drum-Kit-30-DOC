@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Drum-kit</title>
     <link rel="stylesheet" href="style.css">
-    <script src="index.js"></script>
 </head>
 
 <body>
@@ -61,8 +60,28 @@
     <audio data-key="76" src="sounds/tink.wav"></audio>
 
     <script> 
-        
+        window.addEventListener('keydown', function(e) {
+        const audio = document.querySelector(`audio[datakey="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[datakey="${e.keyCode}"]`);
+        if(!audio) return; //stop function from running
+        audio.currentTime = 0;
+        audio.play();
+        key.classList.add('playing');
+    });
+
+    function removeTransition(e) {
+        if (e.propertyName !== 'transform') return; //skip if not a transform
+        console.log(e.propertyName);
+    }
+
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+
     </script>
+
+
+    <script src="index.js"></script>
+
 </body>
 
 
